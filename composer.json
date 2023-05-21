@@ -1,0 +1,23 @@
+{
+    "name": "fuyelk/dump",
+    "description": "用PHP简单的在控制台输出有样式的内容",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "fuyelk",
+            "email": "fuyelk@fuyelk.com",
+            "homepage": "https://www.milinger.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload":{
+        "psr-4":{
+            "fuyelk\\dump\\":"src/"
+        }
+    }
+}
+
