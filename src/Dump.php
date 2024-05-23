@@ -162,14 +162,25 @@ class Dump
     }
 
     /**
-     * 清除控制台样式缓存
+     * 清屏
      * @return string
      * @throws Exception
      * @author fuyelk <fuyelk@fuyelk.com>
      */
     public static function clear(): string
     {
-        return "\033[0m";
+        return "\033[0H\033[0J";
+    }
+
+    /**
+     * 退格
+     * @return string
+     * @author fuyelk <fuyelk@fuyelk.com>
+     * @date 2024/5/23 11:33
+     */
+    public static function backspace()
+    {
+        return "\010";
     }
 
     /**
@@ -186,8 +197,8 @@ class Dump
     {
         $params = array_merge(self::setForeground($foreground),
             self::setBackground($background),
-            self::setFont($font));
+            self::setFont($font)
+        );
         return sprintf("\033[%sm%s\033[0m", implode(';', $params), $text);
     }
 }
-
