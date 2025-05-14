@@ -6,6 +6,26 @@ use Exception;
 
 /**
  * 控制台带样式输出
+ * @method static void fRED(string $text, bool $newLine = false)
+ * @method static void fBLACK(string $text, bool $newLine = false)
+ * @method static void fGREEN(string $text, bool $newLine = false)
+ * @method static void fYELLOW(string $text, bool $newLine = false)
+ * @method static void fBLUE(string $text, bool $newLine = false)
+ * @method static void fPURPLE(string $text, bool $newLine = false)
+ * @method static void fCYAN(string $text, bool $newLine = false)
+ * @method static void fWHITE(string $text, bool $newLine = false)
+ * @method static void fGRAY(string $text, bool $newLine = false)
+ * @method static void fPINK(string $text, bool $newLine = false)
+ * @method static void bRED(string $text, bool $newLine = false)
+ * @method static void bBLACK(string $text, bool $newLine = false)
+ * @method static void bGREEN(string $text, bool $newLine = false)
+ * @method static void bYELLOW(string $text, bool $newLine = false)
+ * @method static void bBLUE(string $text, bool $newLine = false)
+ * @method static void bPURPLE(string $text, bool $newLine = false)
+ * @method static void bCYAN(string $text, bool $newLine = false)
+ * @method static void bWHITE(string $text, bool $newLine = false)
+ * @method static void bGRAY(string $text, bool $newLine = false)
+ * @method static void bPINK(string $text, bool $newLine = false)
  * @author fuyelk <fuyelk@fuyelk.com>
  * @date 2023/5/21 15:42
  */
@@ -60,6 +80,19 @@ class Dump
      * @var int 颜色：粉
      */
     const COLOR_PINK = 9;
+
+    const COLOR_VALUE_LIST = [
+        'BLACK' => self::COLOR_BLACK,
+        'RED' => self::COLOR_RED,
+        'GREEN' => self::COLOR_GREEN,
+        'YELLOW' => self::COLOR_YELLOW,
+        'BLUE' => self::COLOR_BLUE,
+        'PURPLE' => self::COLOR_PURPLE,
+        'CYAN' => self::COLOR_CYAN,
+        'WHITE' => self::COLOR_WHITE,
+        'GRAY' => self::COLOR_GRAY,
+        'PINK' => self::COLOR_PINK
+    ];
 
     /**
      * @var string[] 可用颜色列表
@@ -185,7 +218,7 @@ class Dump
 
     /**
      * 格式化
-     * @param string $text 文本
+     * @param string $text
      * @param string|null $foreground 前景色
      * @param string|null $background 背景色
      * @param string|array|null $font 字体样式
@@ -200,5 +233,29 @@ class Dump
             self::setFont($font)
         );
         return sprintf("\033[%sm%s\033[0m", implode(';', $params), $text);
+    }
+
+    public static function __callStatic($name, $arguments)
+    {
+        $color = strtoupper(substr($name, 1));
+        $text = $arguments[0] ?? '';
+        $newLine = $arguments[1] ?? false;
+
+        if (array_key_exists($color, self::COLOR_VALUE_LIST)) {
+            $colorValue = self::COLOR_VALUE_LIST[$color];
+
+            $foreground = $backend = null;
+
+            // 设置前景色
+            if ('f' == substr($name, 0, 1)) {
+                $foreground = $colorValue;
+            }
+
+            // 设置背景色
+            if ('b' == substr($name, 0, 1)) {
+                $backend = $colorValue;
+            }
+            echo self::format($text . ($newLine ? PHP_EOL : ''), $foreground, $backend);
+        }
     }
 }
