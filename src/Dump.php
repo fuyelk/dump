@@ -217,6 +217,17 @@ class Dump
     }
 
     /**
+     * 删除当前行
+     * @return void
+     * @author fuyelk <fuyelk@fuyelk.com>
+     * @date 2025/7/17 12:02
+     */
+    public static function clearLine()
+    {
+        echo "\033[K\r";
+    }
+
+    /**
      * 格式化
      * @param string $text
      * @param string|null $foreground 前景色
